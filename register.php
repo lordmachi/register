@@ -11,7 +11,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
  
     // Validate username
     if(empty(trim($_POST["username"]))){
-        $username_err = "Please enter a username.";
+        $username_err = "Wprowadź nazwę użytkownika.";
     } else{
         // Prepare a select statement
         $sql = "SELECT id FROM users WHERE username = ?";
@@ -29,12 +29,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 mysqli_stmt_store_result($stmt);
                 
                 if(mysqli_stmt_num_rows($stmt) == 1){
-                    $username_err = "This username is already taken.";
+                    $username_err = "Ta nazwa jest już zajęta.";
                 } else{
                     $username = trim($_POST["username"]);
                 }
             } else{
-                echo "Oops! Something went wrong. Please try again later.";
+                echo "Coś poszło nie tak. Spróbuj ponownie.";
             }
         }
          
@@ -44,20 +44,20 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     
     // Validate password
     if(empty(trim($_POST['password']))){
-        $password_err = "Please enter a password.";     
+        $password_err = "Wprowadź hasło.";     
     } elseif(strlen(trim($_POST['password'])) < 6){
-        $password_err = "Password must have atleast 6 characters.";
+        $password_err = "Hasło musi zawierać minimum 6 znaków.";
     } else{
         $password = trim($_POST['password']);
     }
     
     // Validate confirm password
     if(empty(trim($_POST["confirm_password"]))){
-        $confirm_password_err = 'Please confirm password.';     
+        $confirm_password_err = 'Potwierdź hasło.';     
     } else{
         $confirm_password = trim($_POST['confirm_password']);
         if($password != $confirm_password){
-            $confirm_password_err = 'Password did not match.';
+            $confirm_password_err = 'Podane hasła nie są identyczne. Spróbuj ponownie.';
         }
     }
     
@@ -80,7 +80,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 // Redirect to login page
                 header("location: login.php");
             } else{
-                echo "Something went wrong. Please try again later.";
+                echo "Coś poszło nie tak. Spróbuj ponownie.";
             }
         }
          
@@ -97,7 +97,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <title>Wprowadzanie klienta - Machi House</title>
+    <title>Rejestracja</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
     <style type="text/css">
        
@@ -131,8 +131,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
       <div class="row">
         <div class="col-sm-4"></div>
             <div class="col-sm-4" style="margin-top: 100px;">
-                <h2>Wprowadzanie klienta</h2>
-                    <p>Wypełnij wszystkie pola aby poprawnie zarejestrować klienta.</p>
+                <h2 style="font-size: 48px; margin-bottom: 20px;">Rejestracja</h2>
                 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                     <div class="form-group <?php echo (!empty($username_err)) ? 'has-error' : ''; ?>">
                         <label>Login</label>
@@ -150,7 +149,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                         <span class="help-block"><?php echo $confirm_password_err; ?></span>
                     </div>
                     <div class="form-group">
-                        <input type="submit" class="btn btn-primary" value="Submit" style="width: 100%; background-color: #f8ac59; color: black; border-color: #f8ac59;">
+                        <input type="submit" class="btn btn-primary" value="Zarejestruj się" style="width: 100%; background-color: #f8ac59; color: black; border-color: #f8ac59;">
                     </div>
             </div>
         </div>
